@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <%- include ("./partials/header.ejs") %>
+
+<body>
+    <%- include ("./partials/nav.ejs") %>
+
+    <h1>Contact page - Submit a query</h1>
+    
+
+    <div class="contact-container">
+        <div class="row">
+                <div class="box" id="queryBox">
+                    <form id = "newQuery" method="POST"> 
+                        <label>Email</label><br>  
+                        <input type="text" required name="email"><br>  
+                        <label>Query</label><br>  
+                        <textarea cols="90" rows="9" required name="query"></textarea><br>
+                        <button id="submitQy" class="btn btn-outline-success my-2 my-sm-0" style=" display: block; text-align: center; margin: auto;" type="submit">submit query</button>  
+                    </form>
+                  </div>
+             </div>
+         </div>
+<script>
+          const seacrhBtnElement = document.getElementById("submitQy");  
+          seacrhBtnElement.addEventListener("click", (e) => {   
+            alert("Query has been submitted!");
+          });
+</script>
+
+    <%- include ("./partials/footer.ejs") %>
+
+</body>
+</html>

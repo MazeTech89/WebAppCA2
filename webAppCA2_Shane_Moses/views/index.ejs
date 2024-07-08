@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <%- include ("./partials/header.ejs") %>
+
+<body>
+    <%- include ("./partials/nav.ejs") %>
+
+    <h1>Welcome To Our Recipe Home</h1>
+    <button id="addBtn" class="btn btn-outline-success my-2 my-sm-0" style=" display: block; text-align: center; margin: auto;" type="submit" onclick="display()">Add a new recipe</button>
+    <button id="closeBtn" class="btn btn-outline-success my-2 my-sm-0" style=" display: none; text-align: center; margin: auto;" type="submit"onclick="hide()">Close</button>
+
+    <div class="box">
+      <form id = "newRecipe" action="/" method="POST"> 
+          <label>Recipe Name</label><br>  
+          <input type="text" required name="recipeName"><br>  
+          <label>Ingredients</label><br>
+          <textarea id="textArea1" cols="90" rows="9" required name="ingredients"></textarea><br>
+          <button id="createBtn" class="btn btn-outline-success my-2 my-sm-0" style=" display: block; text-align: center; margin: auto;" type="submit">Create recipe</button>  
+      </form>
+    </div>
+
+    <div class="container">
+        <div class="col">
+             <div class="row">
+                 
+               <div class="box">
+                  <!--For each loop, to get every item from our database using EJS.-->
+                  <% if (recipes.length) { recipes.forEach(recipe=> { %>
+                    <a href="/<%= recipe._id %>"  style="text-decoration:none">
+                    <table style="width:100%">
+                      <tr>
+                        <th data-id="<%= recipe.recipeName %>">Recipe Name: <%= recipe.recipeName %></th>
+                      </tr>
+                      <tr>
+                        <td>Ingredients: <%= recipe.ingredients %></td>
+                      </tr>
+                    </table></a>                
+                                  
+                    <% }); } else { %>
+                  
+                      <p>Sorry, there are no recipes yet...</p>
+                  
+                    <% } %>                 
+             </div>
+         </div>
+
+    <%- include ("./partials/footer.ejs") %>
+
+    <script>
+
+      const createBtnBtnElement = document.getElementById("createBtn");  
+      createBtnBtnElement.addEventListener("click", (e) => {   
+        alert("Recipe has been added!");
+      });
+
+      //unhides the form onlclick of button
+      function display() {
+        const form1 = document.getElementById("newRecipe");
+        const closeBtn = document.getElementById("closeBtn");
+        const addBtn = document.getElementById("addBtn");
+        addBtn.style.display = "none";
+        closeBtn.style.display = "block"
+        form1.style.display = "block";      
+      }
+      //hides form when close button is clicked
+      function hide() {
+        const form1 = document.getElementById("newRecipe");
+        const closeBtn = document.getElementById("closeBtn");
+        const addBtn = document.getElementById("addBtn");
+        addBtn.style.display = "block";
+        closeBtn.style.display = "none"
+        form1.style.display = "none"; 
+      }
+
+      //delete button process fo removing item from database
+      const deleteBtnElement = document.getElementById("deleteBtn");  
+      deleteBtnElement.addEventListener("click", (e) => {   
+        const backEndPoint = `/${deleteBtnElement.dataset.id}`;
+      
+      //AJAX request to DELETE by sending ID to backend
+      fetch(backEndPoint, { 
+        method: "DELETE" 
+      })
+      .then((response) => response.json()) 
+      .then((responseJson) => window.location.href = responseJson.redirect) 
+      .catch((error) => console.log(error));
+      });
+
+    </script>
+
+</body>
+</html>
+
+

@@ -1,0 +1,118 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+
+    <%- include("./partials/header.ejs") %> 
+
+<body> 
+    <%- include("./partials/nav.ejs") %>
+
+  <div id="editRecipeDiv">  
+    <h3>Edit recipe</h3>
+    <form action="/:id" method="post" style="text-align: center;">
+      <!--button must be inside form for method "post" to take effect-->
+      <input type="text" name="id" value="<%= recipe._id %>" hidden>
+      <label>Recipe Name</label><br>  
+      <input type="text" required name="recipeName" value="<%= recipe.recipeName %>"><br>  
+      <label>Ingredients</label><br>  
+      <textarea id="textArea1" cols="90" rows="9" required name="ingredients"><%= recipe.ingredients %></textarea><br>
+      <button id="saveBtn" class="btn btn-outline-success my-2 my-sm-0" type="submit">Save recipe</button>
+
+    </form> 
+  </div>
+  
+  <br>
+
+  <div id="viewRecipe" style="text-align: center; padding: 10px;">
+    <h3>Recipe details</h3> 
+    <h2>  <%= recipe.recipeName %> </h2> 
+    <p>  <%= recipe.ingredients %> </p> 
+    <button id="deleteBtn" data-id="<%= recipe._id %>" class="btn btn-outline-success my-2 my-sm-0" style=" display: block; text-align: center; margin: auto;">Delete</button>
+
+  </div>
+        
+
+
+        <button id="editBtn" class="btn btn-outline-success my-2 my-sm-0" type="submit">Edit recipe</button>
+        <button id="cancelBtn" class="btn btn-outline-success my-2 my-sm-0" type="submit" style="display: none; text-align: center;" action="/">Cancel</button>
+
+
+
+        <%- include("./partials/footer.ejs") %> 
+
+    <script>
+        const viewRecipeDivElement = document.getElementById("viewRecipe"); 
+        const editRecipeDivElement = document.getElementById("editRecipeDiv"); 
+        const editBtnElement = document.getElementById("editBtn"); 
+        const saveBtnElement = document.getElementById("saveBtn");
+        const cancelBtnElement = document.getElementById("cancelBtn"); 
+
+        editBtnElement.addEventListener("click", (e) => {   
+            viewRecipeDivElement.style.display = "none";   
+            editRecipeDivElement.style.display = "block";
+            saveBtnElement.style.display = "block";
+            editBtnElement.style.display = "none";
+            cancelBtnElement.style.display = "block";
+        });
+
+        //resets displaying elements and redirect back to homepage
+        cancelBtnElement.addEventListener("click", (e) => {   
+            viewRecipeDivElement.style.display = "block";   
+            editRecipeDivElement.style.display = "none";
+            saveBtnElement.style.display = "none";
+            editBtnElement.style.display = "block";
+            cancelBtnElement.style.display = "none";
+            alert("Recipe update has been cancelled");
+            location.href = "/";
+        });        
+        
+        saveBtnElement.addEventListener("click", (e) => {   
+            viewRecipeDivElement.style.display = "block";   
+            editBtnElement.style.display = "block";
+            saveBtnElement.style.display = "none";   
+            editRecipeDivElement.style.display = "none";   
+            alert("Recipe has been updated");       
+        });        
+
+      //unhides the form onlclick of button index page
+      function display() {
+        const form1 = document.getElementById("newRecipe");
+        const closeBtn = document.getElementById("closeBtn");
+        const addBtn = document.getElementById("addBtn");
+        addBtn.style.display = "none";
+        closeBtn.style.display = "block"
+        form1.style.display = "block";      
+      }
+      //hides form when close button is clicked index page
+      function hide() {
+        const form1 = document.getElementById("newRecipe");
+        const closeBtn = document.getElementById("closeBtn");
+        const addBtn = document.getElementById("addBtn");
+        addBtn.style.display = "block";
+        closeBtn.style.display = "none"
+        form1.style.display = "none"; 
+      }
+
+      //delete button process fo removing item from database
+      const deleteBtnElement = document.getElementById("deleteBtn");  
+      deleteBtnElement.addEventListener("click", (e) => {   
+        const backEndPoint = `/${deleteBtnElement.dataset.id}`;
+        
+      
+      //AJAX request to DELETE by sending request to backend
+      fetch(backEndPoint, { 
+        method: "DELETE" 
+      })
+      .then((response) => response.json())
+      //response to load the page again
+      .then((responseJson) => window.location.href = responseJson.redirect) 
+      .catch((error) => console.log(error));
+      alert("Recipe has been deleted");
+      });
+
+      function showEdit() {
+        document.getElementById("editRecipe").style.display = "block";
+      }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+h1 {
+    text-align: center;
+}
+h3 {
+    text-align: center;
+}
+
+.logo {
+    height: 60px;
+    width: 90px;
+    padding: 5px;
+    border-radius: 50%;
+}
+table {
+    margin: auto;
+    border-style: double;
+    margin: 30px;
+    padding: 10px;
+}
+#navbarSupportedContent {
+    padding: 2px;
+}
+#navbarSupportedContent li {
+    padding: 10px;
+}
+#navForm {
+    display: flex;
+}
+#navForm input {
+    margin-right: 5px;
+}
+#editForm {
+    display: flex;
+}
+#newRecipe {
+    display: none;
+    margin: auto;
+    text-align: center;
+}
+#editBtn {
+    display: block; 
+    text-align: center; 
+    margin: auto;
+}
+#cancelBtn {
+    display: block; 
+    text-align: center; 
+    margin: auto;
+}
+
+#saveBtn {
+    display: none; 
+    text-align: center; 
+    margin: auto;
+}
+#closeBtn {
+    display: none;
+}
+
+.newRecipe label {
+    width: 30%;
+    font-weight: bold;   
+}
+
+form button {
+     padding-left: 15px;
+}
+
+.container {
+    text-align: center;
+}
+
+.contact-container  {
+    text-align: center;
+}
+#textArea1 {
+    resize: none;
+    width: 30%;
+    height: 100px;
+    margin: auto;
+}
+#deleteBtn {
+    font-size: 15px;
+    margin: auto;
+    display: block;
+    margin-right: 0;
+}
+#deleteBtn:hover {
+    background-color: red;
+}
+footer {
+    bottom: 0;
+    text-align: center;
+}
+#editRecipeDiv{
+    margin: auto;
+    align-self: center;
+    display: none;
+}
